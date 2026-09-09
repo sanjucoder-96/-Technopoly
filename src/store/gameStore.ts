@@ -4,7 +4,7 @@ import type { Card, Config, Game, GameEvent, PendingQuestion, PropertyDef, Quest
 import { pickQuestion, recordAnswer } from '../engine/questionEngine'
 import {
   applyCard, awardAuctionWithQuestion, buildHotel, buildHouse,
-  canBuildHotel, canBuildHouse, canChallenge, canExecuteTrade, canMortgage,
+  canBuildHotel, canBuildHouse, canChallenge, canCoverDeficit, canExecuteTrade, canMortgage,
   canPurchase, checkBankruptcy, checkTimeExpiry, collectRent, correctCashEvent,
   createGame, drawRandomCard, endGame, endTurn, executeTrade, finishAuction,
   logEvent, mortgage, otherTeam, pauseTimer, pay, payTax, placeBid, purchase,
@@ -255,19 +255,33 @@ export const useGame = create<Store>()(
 
       mortgage: (propertyId) => {
         const g = get().game; if (!g) return
-        try { set({ game: withGame(g, (d) => { mortgage(d, d.currentTurn, propertyId) }) }); get().toast({ kind: 'info', title: 'Mortgaged', message: PROPERTIES_BY_ID[propertyId]?.name }) }
+        // Mortgaging is done on behalf of the property's owner — not the team
+        // on the clock. This lets the Raise Funds workflow mortgage a deficit
+        // team's assets even during the other team's turn.
+        const owner = g.properties[propertyId]?.ownerTeam
+        if (!owner) { get().toast({ kind: 'error', title: 'Mortgage failed', message: 'Property is unowned.' }); return }
+        try { set({ game: withGame(g, (d) => { mortgage(d, owner, propertyId) }) }); get().toast({ kind: 'info', title: 'Mortgaged', message: PROPERTIES_BY_ID[propertyId]?.name }) }
         catch (e: unknown) { get().toast({ kind: 'error', title: 'Mortgage failed', message: (e as Error).message }) }
       },
       unmortgage: (propertyId) => {
-        try { set({ game: withGame(get().game, (d) => { unmortgage(d, d.currentTurn, propertyId) }) }); get().toast({ kind: 'success', title: 'Unmortgaged', message: PROPERTIES_BY_ID[propertyId]?.name }) }
+        const g = get().game; if (!g) return
+        const owner = g.properties[propertyId]?.ownerTeam
+        if (!owner) { get().toast({ kind: 'error', title: 'Unmortgage failed', message: 'Property is unowned.' }); return }
+        try { set({ game: withGame(g, (d) => { unmortgage(d, owner, propertyId) }) }); get().toast({ kind: 'success', title: 'Unmortgaged', message: PROPERTIES_BY_ID[propertyId]?.name }) }
         catch (e: unknown) { get().toast({ kind: 'error', title: 'Unmortgage failed', message: (e as Error).message }) }
       },
       sellHouse: (propertyId) => {
-        try { set({ game: withGame(get().game, (d) => { sellHouse(d, d.currentTurn, propertyId) }) }); get().toast({ kind: 'info', title: 'Sold house' }) }
+        const g = get().game; if (!g) return
+        const owner = g.properties[propertyId]?.ownerTeam
+        if (!owner) { get().toast({ kind: 'error', title: 'Sell failed', message: 'Property is unowned.' }); return }
+        try { set({ game: withGame(g, (d) => { sellHouse(d, owner, propertyId) }) }); get().toast({ kind: 'info', title: 'Sold house' }) }
         catch (e: unknown) { get().toast({ kind: 'error', title: 'Sell failed', message: (e as Error).message }) }
       },
       sellHotel: (propertyId) => {
-        try { set({ game: withGame(get().game, (d) => { sellHotel(d, d.currentTurn, propertyId) }) }); get().toast({ kind: 'info', title: 'Sold hotel' }) }
+        const g = get().game; if (!g) return
+        const owner = g.properties[propertyId]?.ownerTeam
+        if (!owner) { get().toast({ kind: 'error', title: 'Sell failed', message: 'Property is unowned.' }); return }
+        try { set({ game: withGame(g, (d) => { sellHotel(d, owner, propertyId) }) }); get().toast({ kind: 'info', title: 'Sold hotel' }) }
         catch (e: unknown) { get().toast({ kind: 'error', title: 'Sell failed', message: (e as Error).message }) }
       },
 
@@ -431,4 +445,4 @@ export const useGame = create<Store>()(
 
 export { BOARD, PROPERTIES, PROPERTIES_BY_ID, DEFAULT_CHANCE_DECK, DEFAULT_CHEST_DECK, DEFAULT_CONFIG }
 export type { PropertyDef, Card, GameEvent, Config, Question }
-export { otherTeam, timerElapsedMs, timerRemainingMs, canPurchase, canMortgage, canBuildHouse, canBuildHotel, canChallenge, canExecuteTrade, wealthBreakdown, pay }
+export { otherTeam, timerElapsedMs, timerRemainingMs, canPurchase, canMortgage, canBuildHouse, canBuildHotel, canChallenge, canExecuteTrade, canCoverDeficit, wealthBreakdown, pay }

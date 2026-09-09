@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useGame, PROPERTIES, PROPERTIES_BY_ID, canExecuteTrade } from '../store/gameStore'
+import { COLOR_GROUP_MEMBERS } from '../engine/engine'
 import type { Game, TeamId } from '../engine/types'
 import { Modal, TeamBadge, money } from './primitives'
 
@@ -83,14 +84,18 @@ function TradeSide({
         {props.length === 0 && <div className="text-xs text-ink-100">No properties.</div>}
         {props.map(p => {
           const s = propState[p.id]
-          const disabled = s.houses > 0 || s.hotel
+          const setLocked = (COLOR_GROUP_MEMBERS[p.colorGroup] ?? []).some(id => {
+            const st = propState[id]; return !!(st && (st.houses > 0 || st.hotel))
+          })
+          const disabled = setLocked
           const selected = side.propertyIds.includes(p.id)
           return (
-            <label key={p.id} className={`flex items-center gap-2 text-xs p-2 rounded ${disabled ? 'opacity-50' : 'hover:bg-canvas-100 cursor-pointer'}`}>
+            <label key={p.id} className={`flex items-center gap-2 text-xs p-2 rounded ${disabled ? 'opacity-50' : 'hover:bg-canvas-100 cursor-pointer'}`}
+              title={disabled ? `${p.colorGroup} set has houses — the whole set is untradeable until all houses are sold.` : ''}>
               <input type="checkbox" checked={selected} disabled={disabled} onChange={() => toggle('p', p.id)} />
               <span className="flex-1 text-ink-500">{p.name}</span>
               {s.mortgaged && <span className="chip bg-amber-50 border-amber-300 text-amber-800">Mortgaged</span>}
-              {disabled && <span className="text-[10px] text-rose-700">Has buildings</span>}
+              {disabled && <span className="text-[10px] text-rose-700">Set has buildings</span>}
               <span className="num text-ink-100">{money(p.price)}</span>
             </label>
           )

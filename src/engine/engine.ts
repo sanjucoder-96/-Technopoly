@@ -168,13 +168,35 @@ export function calculateRent(g: Game, propertyId: string): number {
 // --------------------------------------------------------------------------
 // Bankruptcy detection
 // --------------------------------------------------------------------------
+// A team is truly BANKRUPT only when their cash is below zero AND they have
+// no remaining ability to raise funds (nothing left to mortgage). Cash may
+// legitimately be negative between a required payment and the GM completing
+// mortgage/trade actions to cover the deficit.
+export function mortgageablePropertiesFor(g: Game, team: TeamId): PropertyDef[] {
+  return PROPERTIES.filter(p => canMortgage(g, team, p.id).ok)
+}
+export function maxMortgageValueFor(g: Game, team: TeamId): number {
+  return mortgageablePropertiesFor(g, team)
+    .reduce((sum, p) => sum + Math.round(p.price * g.config.mortgageFraction), 0)
+}
+export function canCoverDeficit(g: Game, team: TeamId): { covered: boolean; deficit: number; mortgageAvailable: number } {
+  const t = g.teams[team]
+  const deficit = t.cash < 0 ? -t.cash : 0
+  const mortgageAvailable = maxMortgageValueFor(g, team)
+  return { covered: deficit === 0 || mortgageAvailable >= deficit, deficit, mortgageAvailable }
+}
 export function checkBankruptcy(g: Game, team: TeamId): void {
   const t = g.teams[team]
   if (t.bankrupt) return
   if (t.cash < 0) {
-    t.bankrupt = true
-    logEvent(g, { type: 'bankrupt', team, message: `${t.name} is BANKRUPT.` })
-    endGame(g, 'bankruptcy', otherTeam(team))
+    const { covered } = canCoverDeficit(g, team)
+    if (!covered) {
+      t.bankrupt = true
+      logEvent(g, { type: 'bankrupt', team, message: `${t.name} is BANKRUPT — cannot cover the deficit even by mortgaging.` })
+      endGame(g, 'bankruptcy', otherTeam(team))
+    }
+    // else: cash is negative but the team can still mortgage. Do not declare
+    // bankruptcy yet — the UI surfaces the deficit for the GM to resolve.
   }
 }
 
@@ -436,11 +458,25 @@ export function canExecuteTrade(g: Game, aGives: TradePayload, bGives: TradePayl
   for (const pid of bGives.propertyIds) if (g.properties[pid]?.ownerTeam !== 'B') return { ok: false, reason: `Team B does not own ${pid}.` }
   for (const cid of aGives.cardIds) if (!g.teams.A.heldCards.find(c => c.cardId === cid)) return { ok: false, reason: `Team A does not hold card ${cid}.` }
   for (const cid of bGives.cardIds) if (!g.teams.B.heldCards.find(c => c.cardId === cid)) return { ok: false, reason: `Team B does not hold card ${cid}.` }
-  // A traded property must not have houses on it — houses stay attached to the
-  // color-set structure; rules aren't explicit but Monopoly-standard: sell first.
+  // Trading rule: if a team has built houses/hotels ANYWHERE in a color set,
+  // the entire color set is untradeable until every house is removed. The
+  // set moves as a whole so a house-bearing set cannot be split.
+  const touchedGroups = new Set<PropertyDef['colorGroup']>()
   for (const pid of [...aGives.propertyIds, ...bGives.propertyIds]) {
-    const s = g.properties[pid]
-    if (s?.houses || s?.hotel) return { ok: false, reason: 'Sell houses/hotels before trading a property.' }
+    const def = PROPERTIES_BY_ID[pid]
+    if (def) touchedGroups.add(def.colorGroup)
+  }
+  for (const group of touchedGroups) {
+    const members = COLOR_GROUP_MEMBERS[group] ?? []
+    for (const memberId of members) {
+      const s = g.properties[memberId]
+      if (s?.houses || s?.hotel) {
+        return {
+          ok: false,
+          reason: `${PROPERTIES_BY_ID[memberId].name} in the ${group} set has buildings. The whole ${group} set is untradeable until all houses/hotels are sold.`
+        }
+      }
+    }
   }
   return { ok: true }
 }

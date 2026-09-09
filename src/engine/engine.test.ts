@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import {
-  createGame, purchase, mortgage, unmortgage, buildHouse, buildHotel,
+  createGame, purchase, mortgage, unmortgage, buildHouse, buildHotel, sellHouse,
   calculateRent, ownsCompleteColorSet, collectRent, wealthBreakdown,
   startAuction, placeBid, finishAuction, awardAuctionWithQuestion, canExecuteTrade, executeTrade,
   canChallenge, resolveChallenge, sendToJail, attemptJailExit, applyCard,
-  setLandingSpace, endTurn, endGame, checkTimeExpiry, PROPERTIES_BY_ID
+  setLandingSpace, endTurn, endGame, checkTimeExpiry, checkBankruptcy, PROPERTIES_BY_ID
 } from './engine'
 import type { Game, TeamId } from './types'
 
@@ -262,6 +262,33 @@ describe('trade', () => {
     expect(g.teams.A.cash).toBe(before.a - 100 + 50)
     expect(g.teams.B.cash).toBe(before.b - 50 + 100)
   })
+  it('rejects trade of any property in a color set that has any houses', () => {
+    // Grant Team A the whole green set and build a house on one of them.
+    const g = newGame()
+    const GREEN = ['loc-17', 'loc-18', 'loc-19']
+    grant(g, 'A', GREEN)
+    g.teams.A.cash = 10000
+    // build house on green-first via engine helper
+    // (using canBuildHouse-safe path)
+    buildHouse(g, 'A', 'loc-17', true)
+    // Try to trade a DIFFERENT green property that itself has no houses.
+    const check = canExecuteTrade(g, { cash: 0, propertyIds: ['loc-18'], cardIds: [] }, { cash: 100, propertyIds: [], cardIds: [] })
+    expect(check.ok).toBe(false)
+    expect(check.reason?.toLowerCase()).toContain('set')
+  })
+  it('allows trading once every house in the color set is removed', () => {
+    const g = newGame()
+    const GREEN = ['loc-17', 'loc-18', 'loc-19']
+    grant(g, 'A', GREEN)
+    grant(g, 'B', ['loc-0'])
+    g.teams.A.cash = 10000
+    buildHouse(g, 'A', 'loc-17', true)
+    // Not allowed while any house is on the set.
+    expect(canExecuteTrade(g, { cash: 0, propertyIds: ['loc-18'], cardIds: [] }, { cash: 0, propertyIds: ['loc-0'], cardIds: [] }).ok).toBe(false)
+    // Remove the house.
+    sellHouse(g, 'A', 'loc-17')
+    expect(canExecuteTrade(g, { cash: 0, propertyIds: ['loc-18'], cardIds: [] }, { cash: 0, propertyIds: ['loc-0'], cardIds: [] }).ok).toBe(true)
+  })
 })
 
 describe('challenge', () => {
@@ -346,12 +373,31 @@ describe('turn & timer & bankruptcy', () => {
     setLandingSpace(g, 'A', 5)
     expect(g.teams.A.cash).toBe(before + g.config.salary)
   })
-  it('bankruptcy ends the game with opponent as winner', () => {
+  it('cash < 0 with mortgageable properties → NOT bankrupt yet', () => {
     const g = newGame()
-    g.teams.A.cash = 0
-    // trigger by paying a bill
+    grant(g, 'A', ['loc-21']) // Mumbai ₹400
+    g.teams.A.cash = -50 // ₹50 deficit, ₹200 mortgage available
+    checkBankruptcy(g, 'A')
+    expect(g.teams.A.bankrupt).toBe(false)
+    expect(g.phase).not.toBe('ended')
+  })
+  it('cash < 0 with no mortgageable property → bankrupt and game ends', () => {
+    const g = newGame()
     g.teams.A.cash = -1
-    // call check via a common pathway
+    checkBankruptcy(g, 'A')
+    expect(g.teams.A.bankrupt).toBe(true)
+    expect(g.phase).toBe('ended')
+    expect(g.winner).toBe('B')
+  })
+  it('cash < 0 with insufficient mortgage total → bankrupt', () => {
+    const g = newGame()
+    grant(g, 'A', ['loc-0']) // Guwahati ₹60 → ₹30 payout
+    g.teams.A.cash = -100 // deficit > available
+    checkBankruptcy(g, 'A')
+    expect(g.teams.A.bankrupt).toBe(true)
+  })
+  it('bankruptcy ends the game with opponent as winner (manual endGame)', () => {
+    const g = newGame()
     endGame(g, 'bankruptcy', 'B')
     expect(g.phase).toBe('ended')
     expect(g.winner).toBe('B')
