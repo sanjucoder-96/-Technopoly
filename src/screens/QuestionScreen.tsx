@@ -165,8 +165,8 @@ function intentTitle(p: PendingQuestion): string {
     case 'build_house': return 'Build house'
     case 'build_hotel': return 'Build hotel'
     case 'rent': return 'Rent — correct answer escapes 50%'
-    case 'chance': return 'Chance card'
-    case 'jail_exit': return 'Jail exit'
+    case 'chance': return 'CHANCE card'
+    case 'jail_exit': return 'Code Hunt exit'
     case 'auction_award': return `Auction award — winning bid ${money(p.intent.winningBid)}`
     case 'challenge_attack': return 'Challenge — attacker'
     case 'challenge_defend': return 'Challenge — defender'
@@ -187,9 +187,9 @@ function consequenceHint(p: PendingQuestion, correct: boolean, game: import('../
         ? `You'll pay ${Math.round(game.config.rentEscapeFractionOnCorrect * 100)}% of the rent.`
         : `You'll pay the full rent.`
     case 'chance':
-      return correct ? `A Chance card will be drawn and applied.` : `No card drawn.`
+      return correct ? `A CHANCE card will be drawn and applied.` : `No card drawn.`
     case 'jail_exit':
-      return correct ? `Free exit from Jail.` : `Pay ₹${game.config.jailFee} and exit Jail.`
+      return correct ? `Free exit from Code Hunt.` : `Pay ₹${game.config.jailFee} and exit Code Hunt.`
     case 'auction_award':
       return correct ? `The property transfers to you and ${money(intent.winningBid)} is charged.` : (
         game.config.auctionQuestionFailPolicy === 'transfer_and_charge' ? `Property transfers and ${money(intent.winningBid)} is charged (per rule).` :

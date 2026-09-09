@@ -30,7 +30,7 @@ describe('financials — cash vs property wealth (segregation)', () => {
   it('after purchasing a ₹200 property: cash=1300, property wealth=100, total=1400', () => {
     // Force the property price to 200 for this scenario.
     const g = newGame()
-    const propertyId = 'loc-10' // Kochi (₹200 per document board)
+    const propertyId = 'loc-10' // L&T Technology Services (₹200 per reference board)
     expect(PROPERTIES_BY_ID[propertyId].price).toBe(200)
     purchase(g, 'A', propertyId, true)
     const w = wealthBreakdownForA(g)
@@ -375,7 +375,7 @@ describe('turn & timer & bankruptcy', () => {
   })
   it('cash < 0 with mortgageable properties → NOT bankrupt yet', () => {
     const g = newGame()
-    grant(g, 'A', ['loc-21']) // Mumbai ₹400
+    grant(g, 'A', ['loc-21']) // TCS ₹400
     g.teams.A.cash = -50 // ₹50 deficit, ₹200 mortgage available
     checkBankruptcy(g, 'A')
     expect(g.teams.A.bankrupt).toBe(false)
@@ -391,7 +391,7 @@ describe('turn & timer & bankruptcy', () => {
   })
   it('cash < 0 with insufficient mortgage total → bankrupt', () => {
     const g = newGame()
-    grant(g, 'A', ['loc-0']) // Guwahati ₹60 → ₹30 payout
+    grant(g, 'A', ['loc-0']) // Zoho ₹60 → ₹30 payout
     g.teams.A.cash = -100 // deficit > available
     checkBankruptcy(g, 'A')
     expect(g.teams.A.bankrupt).toBe(true)
