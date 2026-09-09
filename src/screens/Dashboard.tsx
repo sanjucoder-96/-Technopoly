@@ -6,6 +6,7 @@ import { AuctionModal } from '../ui/AuctionModal'
 import { TradeModal } from '../ui/TradeModal'
 import { ChallengeModal } from '../ui/ChallengeModal'
 import { WealthModal } from '../ui/WealthModal'
+import { RaiseFundsBanner, RaiseFundsModal } from '../ui/RaiseFunds'
 import { money, TeamBadge } from '../ui/primitives'
 import type { TeamId } from '../engine/types'
 import { calculateRent } from '../engine/engine'
@@ -29,12 +30,16 @@ export function Dashboard() {
   const [openTrade, setOpenTrade] = useState(false)
   const [openChallenge, setOpenChallenge] = useState(false)
   const [wealthTeam, setWealthTeam] = useState<TeamId | null>(null)
+  const [raiseTeam, setRaiseTeam] = useState<TeamId | null>(null)
 
   return (
     <div className="min-h-screen surface flex flex-col">
       <TopNav />
 
       <div className="max-w-7xl mx-auto w-full px-6 py-6 space-y-6">
+        {/* Raise-funds banner (only when a team has cash < 0) */}
+        <RaiseFundsBanner onOpen={setRaiseTeam} />
+
         {/* Wealth section — full-width, cash prominent */}
         <WealthSection onOpenBreakdown={setWealthTeam} />
 
@@ -72,6 +77,7 @@ export function Dashboard() {
       <TradeModal open={openTrade} onClose={() => setOpenTrade(false)} />
       <ChallengeModal open={openChallenge} onClose={() => setOpenChallenge(false)} />
       <WealthModal open={wealthTeam !== null} team={wealthTeam} onClose={() => setWealthTeam(null)} />
+      <RaiseFundsModal open={raiseTeam !== null} team={raiseTeam} onClose={() => setRaiseTeam(null)} />
     </div>
   )
 }
