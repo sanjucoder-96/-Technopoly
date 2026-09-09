@@ -43,7 +43,7 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
           <button key={t} onClick={() => setTab(t)}
             className={`px-3 py-1.5 rounded-md text-xs font-semibold border transition-colors capitalize
               ${tab === t ? 'border-teamA-500 bg-teamA-50 text-teamA-700' : 'border-canvas-500 bg-white text-ink-100 hover:bg-canvas-100'}`}>
-            {t === 'rules' ? 'Rules & economy' : t === 'decks' ? `Chest & Chance decks` : `Questions (${game.questions.length})`}
+            {t === 'rules' ? 'Rules & economy' : t === 'decks' ? `Code Chest & Chance decks` : `Questions (${game.questions.length})`}
           </button>
         ))}
       </div>
@@ -55,7 +55,7 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
             {[
               ['startingMoney', 'Starting money'],
               ['salary', 'Salary (per lap)'],
-              ['jailFee', 'Jail fee'],
+              ['jailFee', 'Code Hunt exit fee'],
               ['auctionMinBid', 'Auction min bid'],
               ['incomeTax', 'Income tax'],
               ['superTax', 'Super tax'],
@@ -110,12 +110,12 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
         {tab === 'decks' && (
         <div>
           <div className="text-xs text-amber-800 mb-3 p-3 bg-amber-50 border border-amber-300 rounded-md">
-            The Technopoly rules PDF does not enumerate Chest / Chance card contents. Replace these TEMPLATE cards with your physical deck's actual card texts and effects.
+            The Technopoly rules PDF does not enumerate Code Chest / CHANCE card contents. Replace these TEMPLATE cards with your physical deck's actual card texts and effects.
           </div>
-          <div className="text-xs uppercase tracking-widest text-ink-100 mb-2">Chest deck (JSON)</div>
+          <div className="text-xs uppercase tracking-widest text-ink-100 mb-2">Code Chest deck (JSON)</div>
           <textarea rows={14} className="w-full bg-canvas-100 border border-canvas-500 rounded-md p-2 font-mono text-[11px]"
             value={chestJson} onChange={e => setChestJson(e.target.value)} />
-          <div className="text-xs uppercase tracking-widest text-ink-100 mt-3 mb-2">Chance deck (JSON)</div>
+          <div className="text-xs uppercase tracking-widest text-ink-100 mt-3 mb-2">CHANCE deck (JSON)</div>
           <textarea rows={14} className="w-full bg-canvas-100 border border-canvas-500 rounded-md p-2 font-mono text-[11px]"
             value={chanceJson} onChange={e => setChanceJson(e.target.value)} />
         </div>

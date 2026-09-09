@@ -208,22 +208,22 @@ function LandingCard({
       </div>
 
       {space.type === 'go' && <Note>Salary automatically credited when a full lap completes. Nothing to do here.</Note>}
-      {space.type === 'freeparking' && <Note>Free Parking. No effect. End the turn.</Note>}
+      {space.type === 'freeparking' && <Note>FREE SERVER. No effect. End the turn.</Note>}
 
       {space.type === 'gotojail' && (
-        <ActionRow label="Go To Jail">
-          <button className="btn btn-danger btn-lg" onClick={() => onSendJail(team, 'Landed on Go To Jail')}>Send to Jail</button>
+        <ActionRow label="GO TO CODE HUNT">
+          <button className="btn btn-danger btn-lg" onClick={() => onSendJail(team, 'Landed on GO TO CODE HUNT')}>Send to Code Hunt</button>
         </ActionRow>
       )}
 
       {space.type === 'jail' && (
         <>
-          {!t.jail.inJail && <Note>{t.name} is just visiting Jail. No action needed.</Note>}
+          {!t.jail.inJail && <Note>{t.name} is just visiting Code Hunt. No action needed.</Note>}
           {t.jail.inJail && (
-            <ActionRow label={`${t.name} is in Jail`}>
-              <button className="btn btn-primary btn-lg" onClick={() => onJailExit(team)}>Ask jail question</button>
+            <ActionRow label={`${t.name} is in Code Hunt`}>
+              <button className="btn btn-primary btn-lg" onClick={() => onJailExit(team)}>Ask exit question</button>
               {t.heldCards.some(c => c.title.toLowerCase().includes('jail')) && (
-                <button className="btn btn-lg" onClick={() => onUseJailCard(team)}>Use "Get Out of Jail Free"</button>
+                <button className="btn btn-lg" onClick={() => onUseJailCard(team)}>Use "Get Out Free" card</button>
               )}
             </ActionRow>
           )}
@@ -242,14 +242,14 @@ function LandingCard({
       )}
 
       {space.type === 'chest' && (
-        <ActionRow label="Chest — draw a card (no question)">
-          <button className="btn btn-primary btn-lg" onClick={onChest}>Draw Chest card</button>
+        <ActionRow label="CODE CHEST — draw a card (no question)">
+          <button className="btn btn-primary btn-lg" onClick={onChest}>Draw CODE CHEST card</button>
         </ActionRow>
       )}
 
       {space.type === 'chance' && (
-        <ActionRow label="Chance — answer a question, then draw a card">
-          <button className="btn btn-primary btn-lg" onClick={onChance}>Begin Chance question</button>
+        <ActionRow label="CHANCE — answer a question, then draw a card">
+          <button className="btn btn-primary btn-lg" onClick={onChance}>Begin CHANCE question</button>
         </ActionRow>
       )}
 

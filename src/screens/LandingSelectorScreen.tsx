@@ -4,9 +4,9 @@ import { money, TeamBadge } from '../ui/primitives'
 import { TopNav } from '../ui/TopNav'
 
 const TYPE_LABEL: Record<string, string> = {
-  go: 'GO', property: 'Property', railway: 'Railway', utility: 'Utility',
-  chest: 'Chest', chance: 'Chance', tax: 'Tax',
-  jail: 'Jail', gotojail: 'Go To Jail', freeparking: 'Free Parking'
+  go: 'GO', property: 'Property', railway: 'Data Center', utility: 'Utility',
+  chest: 'Code Chest', chance: 'Chance', tax: 'Tax',
+  jail: 'Code Hunt', gotojail: 'Go To Code Hunt', freeparking: 'Free Server'
 }
 
 const TYPE_COLOR: Record<string, string> = {

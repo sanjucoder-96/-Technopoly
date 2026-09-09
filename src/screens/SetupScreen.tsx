@@ -95,9 +95,9 @@ export function SetupScreen() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm">
             <Item label="Total spaces" v={board.total.toString()} />
             <Item label="Locations" v={`${board.locs}`} />
-            <Item label="Railways" v={`${board.rails}`} />
+            <Item label="Data Centers" v={`${board.rails}`} />
             <Item label="Utilities" v={`${board.utils}`} />
-            <Item label="Chest / Chance / Tax / Jail / Free" v="3 / 3 / 2 / 1+1 / 1" />
+            <Item label="Code Chest / Chance / Tax / Code Hunt / Free" v="3 / 3 / 2 / 1+1 / 1" />
           </div>
           <div className="mt-3 text-xs text-ink-100">
             Every property price, rent and card is editable from the in-game <b>Settings</b> panel.
