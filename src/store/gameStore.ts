@@ -79,6 +79,7 @@ interface Store {
   drawChestNow: () => Card
   requestChance: () => void
   applyCard: (card: Card, team?: TeamId) => string
+  dismissLastCard: () => void
 
   // Jail
   requestJailExit: (team: TeamId) => void
@@ -198,7 +199,7 @@ export const useGame = create<Store>()(
         set({ game: withGame(g, (d) => { setLandingSpace(d, d.currentTurn, spaceIndex) }), view: 'dashboard' })
       },
       markLandingResolved: () => set({ game: withGame(get().game, (d) => { if (d.landing) d.landing.resolved = true }) }),
-      endTurn: () => set({ game: withGame(get().game, endTurn) }),
+      endTurn: () => set({ game: withGame(get().game, (d) => { endTurn(d); d.lastDrawnCard = null }) }),
 
       requestPurchase: (propertyId) => {
         const g = get().game; if (!g) return
@@ -339,7 +340,10 @@ export const useGame = create<Store>()(
 
       drawChestNow: () => {
         const g = get().game!; const card = drawRandomCard(g.chestDeck)
-        set({ game: withGame(g, (d) => { logEvent(d, { type: 'chest_drawn', team: d.currentTurn, cardId: card.id, message: `Chest drawn: ${card.title} — ${card.description}` }) }) })
+        set({ game: withGame(g, (d) => {
+          logEvent(d, { type: 'chest_drawn', team: d.currentTurn, cardId: card.id, message: `Chest drawn: ${card.title} — ${card.description}` })
+          d.lastDrawnCard = { card, team: d.currentTurn, ts: Date.now() }
+        }) })
         return card
       },
       applyCard: (card, team) => {
@@ -348,6 +352,7 @@ export const useGame = create<Store>()(
         get().toast({ kind: 'info', title: card.title, message: summary })
         return summary
       },
+      dismissLastCard: () => set({ game: withGame(get().game, (d) => { d.lastDrawnCard = null }) }),
       addCustomEvent: (message) => set({ game: withGame(get().game, (d) => { logEvent(d, { type: 'note', team: d.currentTurn, message }) }) }),
 
       payTax: (team, amount, label) => set({ game: withGame(get().game, (d) => { payTax(d, team, amount, label) }) }),
@@ -388,6 +393,7 @@ export const useGame = create<Store>()(
                 const card = drawRandomCard(d.chanceDeck)
                 logEvent(d, { type: 'chance_drawn', team: d.currentTurn, cardId: card.id, message: `Chance drawn: ${card.title} — ${card.description}` })
                 applyCard(d, d.currentTurn, card)
+                d.lastDrawnCard = { card, team: d.currentTurn, ts: Date.now() }
               } else {
                 logEvent(d, { type: 'chance_drawn', team: d.currentTurn, message: 'Chance question failed — no card drawn.' })
               }

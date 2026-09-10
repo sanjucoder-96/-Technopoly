@@ -272,6 +272,7 @@ export interface Game {
   questions: Question[]
   askedQuestions: AskedQuestion[]
   pendingQuestion: PendingQuestion | null
+  lastDrawnCard?: { card: Card; team: TeamId; ts: number } | null
   landing?: {
     spaceIndex: number
     resolved: boolean

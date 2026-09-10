@@ -8,7 +8,7 @@ import { ChallengeModal } from '../ui/ChallengeModal'
 import { WealthModal } from '../ui/WealthModal'
 import { RaiseFundsBanner, RaiseFundsModal } from '../ui/RaiseFunds'
 import { money, TeamBadge } from '../ui/primitives'
-import type { TeamId } from '../engine/types'
+import type { Card, TeamId } from '../engine/types'
 import { calculateRent } from '../engine/engine'
 
 export function Dashboard() {
@@ -23,6 +23,7 @@ export function Dashboard() {
   const requestChance = useGame(s => s.requestChance)
   const drawChest = useGame(s => s.drawChestNow)
   const applyCard = useGame(s => s.applyCard)
+  const dismissLastCard = useGame(s => s.dismissLastCard)
   const requestJailExit = useGame(s => s.requestJailExit)
   const useJailCard = useGame(s => s.useJailCard)
 
@@ -42,6 +43,9 @@ export function Dashboard() {
 
         {/* Wealth section — full-width, cash prominent */}
         <WealthSection onOpenBreakdown={setWealthTeam} />
+
+        {/* Last drawn card display */}
+        {game.lastDrawnCard && <DrawnCardBanner card={game.lastDrawnCard} onDismiss={dismissLastCard} />}
 
         {/* Landing / action panel */}
         <LandingCard
@@ -280,6 +284,39 @@ function ActionRow({ label, children }: { label: string; children: React.ReactNo
       <div className="text-[11px] uppercase tracking-widest text-ink-100 mb-2">{label}</div>
       <div className="flex flex-wrap items-center gap-2">{children}</div>
     </div>
+  )
+}
+
+function DrawnCardBanner({ card: drawn, onDismiss }: { card: { card: Card; team: TeamId; ts: number }; onDismiss: () => void }) {
+  const game = useGame(s => s.game)!
+  const teamName = game.teams[drawn.team].name
+  const isChest = drawn.card.deck === 'chest'
+  const accent = isChest ? 'amber' : 'violet'
+  return (
+    <section className={`rounded-2xl border-2 p-6 animate-flyup
+      ${isChest ? 'border-amber-400 bg-amber-50' : 'border-violet-400 bg-violet-50'}`}>
+      <div className="flex items-start gap-4">
+        <div className={`w-14 h-14 rounded-xl grid place-items-center text-2xl font-black text-white shrink-0
+          ${isChest ? 'bg-amber-500' : 'bg-violet-500'}`}>
+          {isChest ? '📦' : '🎲'}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1">
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest
+              ${isChest ? 'bg-amber-200 text-amber-900' : 'bg-violet-200 text-violet-900'}`}>
+              {isChest ? 'Code Chest' : 'Chance'}
+            </span>
+            <TeamBadge team={drawn.team} name={teamName} />
+          </div>
+          <h3 className={`text-xl font-black ${isChest ? 'text-amber-900' : 'text-violet-900'}`}>{drawn.card.title}</h3>
+          <p className={`text-sm mt-1 ${isChest ? 'text-amber-800' : 'text-violet-800'}`}>{drawn.card.description}</p>
+        </div>
+        <button onClick={onDismiss}
+          className={`btn shrink-0 ${isChest ? 'border-amber-400 text-amber-800 hover:bg-amber-100' : 'border-violet-400 text-violet-800 hover:bg-violet-100'}`}>
+          Dismiss ✕
+        </button>
+      </div>
+    </section>
   )
 }
 
