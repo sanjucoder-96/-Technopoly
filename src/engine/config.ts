@@ -18,7 +18,13 @@ export const DEFAULT_CONFIG: Config = {
   incomeTax: 200,               // sensible default; editable
   superTax: 100,                // sensible default; editable
   challengeQuestionLevel: 'hard', // "challenging question" — default hard; editable
-  questionTimeSeconds: 30,        // per-question countdown; editable
+  questionTimeSeconds: 45,        // fallback per-question countdown; editable
+  questionTimeLimits: {
+    easy: 45,
+    medium: 45,
+    medium_hard: 60,
+    hard: 60
+  },
   rentEscapeFractionOnCorrect: 0.5, // house rule: correct answer → pay 50% rent
   auctionQuestionFailPolicy: 'unowned' // safest default; editable
 }

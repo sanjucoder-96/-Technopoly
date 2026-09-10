@@ -50,9 +50,10 @@ export function QuestionScreen() {
   const contextTitle = useMemo(() => intentTitle(pending), [pending])
 
   const diffColor = {
-    easy:   'bg-emerald-100 text-emerald-800 border-emerald-300',
-    medium: 'bg-amber-100 text-amber-800 border-amber-300',
-    hard:   'bg-rose-100 text-rose-800 border-rose-300'
+    easy:        'bg-emerald-100 text-emerald-800 border-emerald-300',
+    medium:      'bg-amber-100 text-amber-800 border-amber-300',
+    medium_hard: 'bg-orange-100 text-orange-800 border-orange-300',
+    hard:        'bg-rose-100 text-rose-800 border-rose-300'
   }[pending.difficulty]
 
   return (

@@ -138,7 +138,7 @@ function makePending(g: Game, intent: QuestionIntent, difficulty: Game['config']
     difficulty,
     context,
     startedAtMs: Date.now(),
-    timeLimitMs: g.config.questionTimeSeconds * 1000,
+    timeLimitMs: (g.config.questionTimeLimits[difficulty] ?? g.config.questionTimeSeconds) * 1000,
     intent
   }
 }
