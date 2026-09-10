@@ -220,7 +220,7 @@ function QuestionBody({ question }: { question: import('../engine/types').Questi
           {text}
         </div>
       )}
-      <pre className="bg-slate-50 border border-slate-200 rounded-xl px-6 py-4 text-[1.1rem] md:text-[1.25rem] leading-relaxed font-mono text-slate-800 overflow-x-auto whitespace-pre">{code}</pre>
+      <pre className="bg-slate-50 border border-slate-200 border-l-[3px] border-l-indigo-400 rounded-xl px-6 py-4 text-[1.1rem] md:text-[1.25rem] leading-relaxed font-mono text-slate-800 overflow-x-auto whitespace-pre [tab-size:2]" tabIndex={0} aria-label="Code listing">{code}</pre>
     </div>
   )
 }
