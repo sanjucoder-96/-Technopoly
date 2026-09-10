@@ -85,9 +85,7 @@ export function QuestionScreen() {
           </div>
 
           <div className="card p-8 shadow-pop">
-            <div className="text-2xl md:text-3xl font-bold text-ink-500 leading-snug text-center">
-              {pending.question.question}
-            </div>
+            <QuestionBody text={pending.question.question} />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8">
               {pending.question.options.map((opt, i) => {
@@ -202,4 +200,77 @@ function consequenceHint(p: PendingQuestion, correct: boolean, game: import('../
     case 'challenge_defend':
       return correct ? `Successful defence — property stays.` : `Property transfers to the attacker.`
   }
+}
+
+const CODE_LINE_RE = [
+  /;\s*$/,
+  /\{\s*$/,
+  /^\s*\}\s*;?\s*$/,
+  /^\s*#\s*(define|include|ifdef|ifndef|if\b|else\b|endif)/,
+  /^\s*(int|void|char|float|double|long|short|unsigned|struct|union|enum|typedef|const|static|extern|signed)\s/,
+  /^\s*(class|interface|abstract|public|private|protected|final)\s/,
+  /^\s*(def |import |from |return |yield |lambda )/,
+  /^\s*(if|for|while|switch|do|else|elif|case|default|try|catch|except|finally)\s*[\(\{:]/,
+  /^\s*(printf|scanf|puts|System\.out|System\.err)/,
+  /^\s*(push|pop|enqueue|dequeue|peek)\s*\(/,
+  /^\s*print\s*\(/,
+  /^\s*\w+\s*\.\s*\w+\s*\(/,
+  /^\s*new\s+\w/,
+  /^\s*\*?\(?\*?\w+\)?\s*(\[[\w\s]*\])?\s*[+\-*\/%&|^]?=\s/,
+  /^\s*\(\*\w+\)/,
+  /^\s*\w+\s*\([^)]*\)\s*;?\s*$/,
+]
+
+function isCodeLine(line: string): boolean {
+  const t = line.trim()
+  if (!t) return false
+  if (t.endsWith('?')) return false
+  return CODE_LINE_RE.some(r => r.test(t))
+}
+
+type Segment = { kind: 'text' | 'code'; content: string }
+
+function parseQuestionText(text: string): Segment[] {
+  if (!text.includes('\n')) return [{ kind: 'text', content: text }]
+  const lines = text.split('\n')
+  const segments: Segment[] = []
+  let curKind: 'text' | 'code' = 'text'
+  let curLines: string[] = []
+
+  for (const line of lines) {
+    const kind: 'text' | 'code' = line.trim() === '' ? curKind : (isCodeLine(line) ? 'code' : 'text')
+    if (kind !== curKind && curLines.length > 0) {
+      segments.push({ kind: curKind, content: curLines.join('\n') })
+      curLines = []
+    }
+    curKind = kind
+    curLines.push(line)
+  }
+  if (curLines.length > 0) segments.push({ kind: curKind, content: curLines.join('\n') })
+  return segments
+}
+
+function QuestionBody({ text }: { text: string }) {
+  const segments = useMemo(() => parseQuestionText(text), [text])
+  const hasCode = segments.some(s => s.kind === 'code')
+
+  if (!hasCode) {
+    return (
+      <div className="text-2xl md:text-3xl font-bold text-ink-500 leading-snug text-center whitespace-pre-line">
+        {text}
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-4">
+      {segments.map((seg, i) =>
+        seg.kind === 'code' ? (
+          <pre key={i} className="bg-slate-50 border border-slate-200 rounded-xl px-6 py-4 text-[1.1rem] md:text-[1.25rem] leading-relaxed font-mono text-slate-800 overflow-x-auto">{seg.content}</pre>
+        ) : (
+          <div key={i} className="text-2xl md:text-3xl font-bold text-ink-500 leading-snug text-center whitespace-pre-line">{seg.content}</div>
+        )
+      )}
+    </div>
+  )
 }
