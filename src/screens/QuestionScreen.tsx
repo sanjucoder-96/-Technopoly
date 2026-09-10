@@ -213,14 +213,16 @@ function QuestionBody({ question }: { question: import('../engine/types').Questi
     )
   }
 
+  // Code questions: keep the prompt above the block, left-aligned to line up
+  // with the code, and a touch smaller so prompt + code fit comfortably.
   return (
     <div className="space-y-4">
       {text && (
-        <div className="text-2xl md:text-3xl font-bold text-ink-500 leading-snug text-center whitespace-pre-line">
+        <div className="text-lg md:text-2xl font-bold text-ink-500 leading-snug text-left whitespace-pre-line">
           {text}
         </div>
       )}
-      <pre className="bg-slate-50 border border-slate-200 border-l-[3px] border-l-indigo-400 rounded-xl px-6 py-4 text-[1.1rem] md:text-[1.25rem] leading-relaxed font-mono text-slate-800 overflow-x-auto whitespace-pre [tab-size:2]" tabIndex={0} aria-label="Code listing">{code}</pre>
+      <pre className="bg-slate-50 border border-slate-200 border-l-[3px] border-l-indigo-400 rounded-xl px-5 py-4 text-sm md:text-base leading-relaxed font-mono text-slate-800 text-left overflow-x-auto whitespace-pre [tab-size:2]" tabIndex={0} aria-label="Code listing">{code}</pre>
     </div>
   )
 }
