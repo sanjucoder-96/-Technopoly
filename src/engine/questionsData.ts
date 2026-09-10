@@ -11,8 +11,10 @@ printf("%d", a[2] - a[4]);`,
   { id: 'q-e-02', difficulty: 'easy', category: 'DSA-Arrays',
     question: 'What is printed?',
     code: `int a[] = {2, 4, 6, 8};
-for(int i = 0; i < 4; i += 2)
-    printf("%d ", a[i]);`,
+for(int i = 0;
+i < 4;
+i += 2)
+printf("%d ", a[i]);`,
     options: ['2 4', '2 6', '4 8', '2 4 6 8'],
     correctIndex: 1 },
   { id: 'q-e-03', difficulty: 'easy', category: 'DSA-Arrays',
@@ -130,7 +132,9 @@ printf("%d", *(p + 1) + 5);`,
     correctIndex: 2 },
   { id: 'q-e-21', difficulty: 'easy', category: 'C-Basics',
     question: 'What is printed?',
-    code: `void change(int a[]) { a[0] = 100; }
+    code: `void change(int a[]) {
+    a[0] = 100;
+}
 
 int main() {
     int x[] = {10, 20};
@@ -147,7 +151,9 @@ printf("%zu", sizeof(a));`,
     correctIndex: 2 },
   { id: 'q-e-23', difficulty: 'easy', category: 'C-Basics',
     question: 'What is printed?',
-    code: `void fun(int x) { x = 50; }
+    code: `void fun(int x) {
+    x = 50;
+}
 
 int main() {
     int a = 10;
@@ -193,7 +199,9 @@ printf("%d", s[1].marks);`,
     correctIndex: 1 },
   { id: 'q-e-27', difficulty: 'easy', category: 'C-Structures',
     question: 'What is printed?',
-    code: `struct Student { int marks; };
+    code: `struct Student {
+    int marks;
+};
 struct Student s = {90};
 struct Student *p = &s;
 printf("%d", p->marks);`,
@@ -242,25 +250,25 @@ print(x[:3])`,
   { id: 'q-e-35', difficulty: 'easy', category: 'Python-Loops',
     question: 'What is printed?',
     code: `for i in range(2, 7, 2):
-    print(i, end=" ")`,
+print(i, end=" ")`,
     options: ['2 4 6', '2 4 6 8', '1 3 5 7', '2 3 4 5 6'],
     correctIndex: 0 },
   { id: 'q-e-36', difficulty: 'easy', category: 'Python-Loops',
     question: 'What is printed?',
     code: `for i in range(3):
-    print(i)
+print(i)
 else:
-    print("Done")`,
+print("Done")`,
     options: ['0 1 2', '0 1 2 Done', 'Done 0 1 2', 'Error'],
     correctIndex: 1 },
   { id: 'q-e-37', difficulty: 'easy', category: 'Python-Loops',
     question: 'What is printed?',
     code: `for i in range(5):
-    if i == 2:
-        break
-    print(i)
+if i == 2:
+break
+print(i)
 else:
-    print("Done")`,
+print("Done")`,
     options: ['0 1 Done', '0 1', '0 1 2 Done', 'Done'],
     correctIndex: 1 },
   { id: 'q-e-38', difficulty: 'easy', category: 'Python-Lists',
@@ -273,8 +281,8 @@ print(x)`,
   { id: 'q-e-39', difficulty: 'easy', category: 'Python-Functions',
     question: 'What is printed?',
     code: `def add(x, items=[]):
-    items.append(x)
-    return items
+items.append(x)
+return items
 
 print(add(1))
 print(add(2))`,
@@ -295,9 +303,9 @@ print(d["a"])`,
     question: 'What is printed?',
     code: `x = []
 if x:
-    print("A")
+print("A")
 else:
-    print("B")`,
+print("B")`,
     options: ['A', 'B', '[]', 'Error'],
     correctIndex: 1 },
   { id: 'q-e-43', difficulty: 'easy', category: 'Python-Basics',
@@ -466,7 +474,9 @@ v.move();`,
   { id: 'q-m-01', difficulty: 'medium', category: 'DSA-Arrays',
     question: '',
     code: `int a[] = {2, 5, 8, 11};
-for(int i = 1; i < 4; i++) a[i] = a[i] - a[i-1];
+for(int i = 1;
+i < 4;
+i++) a[i] = a[i] - a[i-1];
 printf("%d", a[3]);`,
     options: ['6', '8', '9', '11'],
     correctIndex: 2 },
@@ -474,7 +484,9 @@ printf("%d", a[3]);`,
     question: '',
     code: `int a[] = {4, 7, 2, 9, 5};
 int count = 0;
-for(int i = 0; i < 5; i++) if(a[i] > a[0]) count++;
+for(int i = 0;
+i < 5;
+i++) if(a[i] > a[0]) count++;
 printf("%d", count);`,
     options: ['2', '3', '4', '5'],
     correctIndex: 1 },
@@ -482,7 +494,9 @@ printf("%d", count);`,
     question: '',
     code: `int a[] = {3, 8, 6, 10, 4};
 int count = 0;
-for(int i = 0; i < 4; i++) if(a[i] < a[i+1]) count++;
+for(int i = 0;
+i < 4;
+i++) if(a[i] < a[i+1]) count++;
 printf("%d", count);`,
     options: ['1', '2', '3', '4'],
     correctIndex: 1 },
@@ -583,7 +597,9 @@ a[i] = a[i++] + 5;`,
     correctIndex: 0 },
   { id: 'q-m-21', difficulty: 'medium', category: 'C-Basics',
     question: '',
-    code: `void change(int a[]) { a[1] = 99; }
+    code: `void change(int a[]) {
+    a[1] = 99;
+}
 int main() {
     int a[] = {10,20,30};
     change(a);
@@ -659,7 +675,10 @@ printf("%d", *p++);`,
     correctIndex: 0 },
   { id: 'q-m-31', difficulty: 'medium', category: 'C-Structures',
     question: 'What is a.x?',
-    code: `struct Point { int x; int y; };
+    code: `struct Point {
+    int x;
+    int y;
+};
 struct Point a = {2, 3};
 struct Point b = a;
 b.x = 10;`,
@@ -667,15 +686,21 @@ b.x = 10;`,
     correctIndex: 0 },
   { id: 'q-m-32', difficulty: 'medium', category: 'C-Structures',
     question: '',
-    code: `struct Student { int marks; };
+    code: `struct Student {
+    int marks;
+};
 struct Student s[3] = {{60}, {75}, {90}};
-for(int i = 0; i < 3; i++)
-    if(s[i].marks >= 75) printf("%d ", s[i].marks);`,
+for(int i = 0;
+i < 3;
+i++)
+if(s[i].marks >= 75) printf("%d ", s[i].marks);`,
     options: ['60 75 90', '75 90', '60 90', '90'],
     correctIndex: 1 },
   { id: 'q-m-33', difficulty: 'medium', category: 'C-Structures',
     question: '',
-    code: `struct Point { int x; };
+    code: `struct Point {
+    int x;
+};
 struct Point p = {10};
 struct Point *q = &p;
 (*q).x = 25;
@@ -684,7 +709,9 @@ printf("%d", p.x);`,
     correctIndex: 1 },
   { id: 'q-m-34', difficulty: 'medium', category: 'C-Structures',
     question: '',
-    code: `struct Student { int marks; };
+    code: `struct Student {
+    int marks;
+};
 struct Student a = {80};
 struct Student b = a;
 b.marks += 10;
@@ -742,10 +769,10 @@ print(x[::-1])`,
   { id: 'q-m-42', difficulty: 'medium', category: 'Python-Loops',
     question: 'What is printed?',
     code: `for i in range(3):
-    if i == 1:
-        break
+if i == 1:
+break
 else:
-    print("Done")`,
+print("Done")`,
     options: ['Done', '0', 'Nothing', '0 Done'],
     correctIndex: 2 },
   { id: 'q-m-43', difficulty: 'medium', category: 'Python-Lists',
@@ -759,9 +786,9 @@ print(a[0][0])`,
   { id: 'q-m-44', difficulty: 'medium', category: 'Python-Functions',
     question: '',
     code: `def fun(x):
-    if x > 5:
-        return x * 2
-    return x + 2
+if x > 5:
+return x * 2
+return x + 2
 print(fun(5))`,
     options: ['5', '7', '10', '12'],
     correctIndex: 1 },
@@ -775,9 +802,9 @@ print(len(x))`,
     question: '',
     code: `x = [0]
 if x:
-    print("True")
+print("True")
 else:
-    print("False")`,
+print("False")`,
     options: ['True', 'False', '0', 'Error'],
     correctIndex: 0 },
   { id: 'q-m-47', difficulty: 'medium', category: 'Python-Dictionaries',
@@ -791,8 +818,8 @@ print(d["c"])`,
     question: '',
     code: `count = 0
 for i in range(2):
-    for j in range(3):
-        count += 1
+for j in range(3):
+count += 1
 print(count)`,
     options: ['3', '5', '6', '9'],
     correctIndex: 2 },
@@ -800,7 +827,9 @@ print(count)`,
     question: '',
     code: `class A {
     int x;
-    A() { x = 10; }
+    A() {
+        x = 10;
+    }
 }
 A obj = new A();
 System.out.println(obj.x);`,
@@ -810,7 +839,9 @@ System.out.println(obj.x);`,
     question: 'What is obj.x?',
     code: `class A {
     int x = 5;
-    void set(int x) { this.x = x; }
+    void set(int x) {
+        this.x = x;
+    }
 }
 A obj = new A();
 obj.set(20);`,
@@ -819,8 +850,12 @@ obj.set(20);`,
   { id: 'q-m-51', difficulty: 'medium', category: 'Java-Polymorphism',
     question: '',
     code: `class Test {
-    void show(int x) { System.out.println("int"); }
-    void show(double x) { System.out.println("double"); }
+    void show(int x) {
+        System.out.println("int");
+    }
+    void show(double x) {
+        System.out.println("double");
+    }
 }
 Test t = new Test();
 t.show(5);`,
@@ -828,22 +863,36 @@ t.show(5);`,
     correctIndex: 0 },
   { id: 'q-m-52', difficulty: 'medium', category: 'Java-Inheritance',
     question: 'What can obj directly access?',
-    code: `class A { int x = 10; }
-class B extends A { int y = 20; }
+    code: `class A {
+    int x = 10;
+}
+class B extends A {
+    int y = 20;
+}
 B obj = new B();`,
     options: ['Only y', 'Only x', 'x and y', 'Neither'],
     correctIndex: 2 },
   { id: 'q-m-53', difficulty: 'medium', category: 'Java-Polymorphism',
     question: '',
-    code: `class A { void show() { System.out.println("A"); } }
-class B extends A { void show() { System.out.println("B"); } }
+    code: `class A {
+    void show() {
+        System.out.println("A");
+    }
+}
+class B extends A {
+    void show() {
+        System.out.println("B");
+    }
+}
 A obj = new B();
 obj.show();`,
     options: ['A', 'B', 'A B', 'Compilation error'],
     correctIndex: 1 },
   { id: 'q-m-54', difficulty: 'medium', category: 'Java-Static',
     question: '',
-    code: `class Test { static int x = 5; }
+    code: `class Test {
+    static int x = 5;
+}
 Test a = new Test();
 Test b = new Test();
 a.x = 20;
@@ -854,7 +903,9 @@ System.out.println(b.x);`,
     question: '',
     code: `class Student {
     private int marks = 80;
-    public int getMarks() { return marks; }
+    public int getMarks() {
+        return marks;
+    }
 }
 Student s = new Student();
 System.out.println(s.getMarks());`,
@@ -862,18 +913,30 @@ System.out.println(s.getMarks());`,
     correctIndex: 1 },
   { id: 'q-m-56', difficulty: 'medium', category: 'Java-Inheritance',
     question: '',
-    code: `class A { int x = 10; }
+    code: `class A {
+    int x = 10;
+}
 class B extends A {
     int x = 20;
-    void show() { System.out.println(super.x); }
+    void show() {
+        System.out.println(super.x);
+    }
 }
 new B().show();`,
     options: ['10', '20', '30', 'Compilation error'],
     correctIndex: 0 },
   { id: 'q-m-57', difficulty: 'medium', category: 'Java-Polymorphism',
     question: 'Which determines the overridden method that runs?',
-    code: `class Animal { void sound() { System.out.println("Animal"); } }
-class Dog extends Animal { void sound() { System.out.println("Dog"); } }
+    code: `class Animal {
+    void sound() {
+        System.out.println("Animal");
+    }
+}
+class Dog extends Animal {
+    void sound() {
+        System.out.println("Dog");
+    }
+}
 Animal a = new Dog();
 a.sound();`,
     options: ['Only declared type', 'Actual object type at runtime', 'Class name of Animal', 'Constructor return type'],
@@ -881,8 +944,12 @@ a.sound();`,
   { id: 'q-m-58', difficulty: 'medium', category: 'Java-Constructors',
     question: '',
     code: `class Box {
-    Box() { System.out.println("A"); }
-    Box(int x) { System.out.println("B"); }
+    Box() {
+        System.out.println("A");
+    }
+    Box(int x) {
+        System.out.println("B");
+    }
 }
 new Box(5);`,
     options: ['A', 'B', 'A B', 'Compilation error'],
@@ -891,7 +958,9 @@ new Box(5);`,
     question: '',
     code: `class Test {
     static int count = 0;
-    Test() { count++; }
+    Test() {
+        count++;
+    }
 }
 Test a = new Test();
 Test b = new Test();
@@ -900,7 +969,11 @@ System.out.println(a.count);`,
     correctIndex: 2 },
   { id: 'q-m-60', difficulty: 'medium', category: 'Java-Inheritance',
     question: '',
-    code: `class A { void show() { System.out.print("A"); } }
+    code: `class A {
+    void show() {
+        System.out.print("A");
+    }
+}
 class B extends A {
     void show() {
         super.show();
@@ -915,8 +988,10 @@ new B().show();`,
   { id: 'q-mh-01', difficulty: 'medium_hard', category: 'DSA-Arrays',
     question: '',
     code: `int a[] = {2, 4, 6, 8};
-for(int i = 1; i < 4; i++)
-    a[i] += a[i-1];
+for(int i = 1;
+i < 4;
+i++)
+a[i] += a[i-1];
 printf("%d %d", a[2], a[3]);`,
     options: ['6 8', '12 20', '12 26', '10 18'],
     correctIndex: 2 },
@@ -924,8 +999,10 @@ printf("%d %d", a[2], a[3]);`,
     question: 'What is the resulting array?',
     code: `int a[] = {1,2,3,4,5};
 int temp = a[0];
-for(int i = 0; i < 4; i++)
-    a[i] = a[i+1];
+for(int i = 0;
+i < 4;
+i++)
+a[i] = a[i+1];
 a[4] = temp;`,
     options: ['2 3 4 5 1', '5 1 2 3 4', '1 3 4 5 2', '2 1 3 4 5'],
     correctIndex: 0 },
@@ -936,7 +1013,7 @@ int i = 0, j = 4, count = 0;
 
 while(i < j) {
     if(a[i] + a[j] > 9)
-        j--;
+    j--;
     else {
         count++;
         i++;
@@ -947,16 +1024,20 @@ while(i < j) {
   { id: 'q-mh-04', difficulty: 'medium_hard', category: 'C-Basics',
     question: 'Which statement is correct?',
     code: `int a[4] = {10,20,30,40};
-for(int i = 0; i <= 4; i++)
-    printf("%d ", a[i]);`,
+for(int i = 0;
+i <= 4;
+i++)
+printf("%d ", a[i]);`,
     options: ['It prints all four values safely', 'It prints five values, with the fifth being 0', 'Accessing a[4] is outside the array and causes undefined behavior', 'Compilation always fails'],
     correctIndex: 2 },
   { id: 'q-mh-05', difficulty: 'medium_hard', category: 'DSA-Arrays',
     question: 'What is count?',
     code: `int a[] = {2,3,2,4,3,2};
 int count = 0;
-for(int i = 0; i < 6; i++)
-    if(a[i] == 2) count++;`,
+for(int i = 0;
+i < 6;
+i++)
+if(a[i] == 2) count++;`,
     options: ['2', '3', '4', '5'],
     correctIndex: 1 },
   { id: 'q-mh-06', difficulty: 'medium_hard', category: 'DSA-Arrays',
@@ -1148,14 +1229,21 @@ p->marks += 15;`,
 struct Item a[3] = {{20}, {50}, {30}};
 
 int max = a[0].price;
-for(int i=1;i<3;i++)
-    if(a[i].price > max) max = a[i].price;`,
+for(int i=1;
+i<3;
+i++)
+if(a[i].price > max) max = a[i].price;`,
     options: ['20', '30', '50', '100'],
     correctIndex: 2 },
   { id: 'q-mh-33', difficulty: 'medium_hard', category: 'C-Structures',
     question: '',
-    code: `struct Date { int day; int month; };
-struct Student { struct Date dob; };
+    code: `struct Date {
+    int day;
+    int month;
+};
+struct Student {
+    struct Date dob;
+};
 
 struct Student s = {{12, 8}};
 
@@ -1164,14 +1252,19 @@ printf("%d", s.dob.month);`,
     correctIndex: 0 },
   { id: 'q-mh-34', difficulty: 'medium_hard', category: 'C-Structures',
     question: 'Which expression correctly accesses y through q?',
-    code: `struct Point { int x; int y; };
+    code: `struct Point {
+    int x;
+    int y;
+};
 struct Point p = {3,4};
 struct Point *q = &p;`,
     options: ['q.y', '*q.y', 'q->y', '&q.y'],
     correctIndex: 2 },
   { id: 'q-mh-35', difficulty: 'medium_hard', category: 'C-Structures',
     question: '',
-    code: `struct S { int x; };
+    code: `struct S {
+    int x;
+};
 struct S a[2] = {{5},{10}};
 struct S *p = a;
 (p+1)->x += 5;
@@ -1219,8 +1312,8 @@ printf("%d", CUBE(x++));`,
   { id: 'q-mh-41', difficulty: 'medium_hard', category: 'Python-Functions',
     question: 'What is printed?',
     code: `def add(x, a=[]):
-    a.append(x)
-    return a
+a.append(x)
+return a
 
 print(add(1))
 print(add(2))`,
@@ -1245,9 +1338,9 @@ print(d["c"])`,
     question: '',
     code: `x = 0
 for i in range(1,5):
-    if i == 3:
-        continue
-    x += i
+if i == 3:
+continue
+x += i
 
 print(x)`,
     options: ['7', '8', '9', '10'],
@@ -1283,10 +1376,14 @@ b[0].append(9)`,
   { id: 'q-mh-49', difficulty: 'medium_hard', category: 'Java-Inheritance',
     question: 'What is printed?',
     code: `class A {
-    A() { System.out.print("A"); }
+    A() {
+        System.out.print("A");
+    }
 }
 class B extends A {
-    B() { System.out.print("B"); }
+    B() {
+        System.out.print("B");
+    }
 }
 new B();`,
     options: ['A', 'B', 'AB', 'BA'],
@@ -1294,16 +1391,24 @@ new B();`,
   { id: 'q-mh-50', difficulty: 'medium_hard', category: 'Java-Polymorphism',
     question: '',
     code: `class Test {
-    void show(int x) { System.out.print("I"); }
-    void show(double x) { System.out.print("D"); }
+    void show(int x) {
+        System.out.print("I");
+    }
+    void show(double x) {
+        System.out.print("D");
+    }
 }
 new Test().show(3.0);`,
     options: ['I', 'D', 'ID', 'Compilation error'],
     correctIndex: 1 },
   { id: 'q-mh-51', difficulty: 'medium_hard', category: 'Java-Inheritance',
     question: '',
-    code: `class A { int x = 10; }
-class B extends A { int x = 20; }
+    code: `class A {
+    int x = 10;
+}
+class B extends A {
+    int x = 20;
+}
 
 A obj = new B();
 System.out.println(obj.x);`,
@@ -1311,8 +1416,16 @@ System.out.println(obj.x);`,
     correctIndex: 0 },
   { id: 'q-mh-52', difficulty: 'medium_hard', category: 'Java-Polymorphism',
     question: '',
-    code: `class A { void show() { System.out.print("A"); } }
-class B extends A { void show() { System.out.print("B"); } }
+    code: `class A {
+    void show() {
+        System.out.print("A");
+    }
+}
+class B extends A {
+    void show() {
+        System.out.print("B");
+    }
+}
 
 B b = new B();
 A a = b;
@@ -1342,7 +1455,9 @@ class B extends A {
     question: '',
     code: `class Test {
     static int x = 10;
-    static void change() { x += 5; }
+    static void change() {
+        x += 5;
+    }
 }
 Test.change();
 System.out.println(Test.x);`,
@@ -1350,8 +1465,10 @@ System.out.println(Test.x);`,
     correctIndex: 1 },
   { id: 'q-mh-56', difficulty: 'medium_hard', category: 'Java-Inheritance',
     question: 'Which statement is correct?',
-    code: `class A {}
-class B extends A {}
+    code: `class A {
+}
+class B extends A {
+}
 
 A obj = new B();
 B ref = (B)obj;`,
@@ -1372,7 +1489,9 @@ Test t = new Test();`,
   { id: 'q-mh-58', difficulty: 'medium_hard', category: 'Java-Inheritance',
     question: 'What is printed?',
     code: `class A {
-    void show() { System.out.print("A"); }
+    void show() {
+        System.out.print("A");
+    }
 }
 class B extends A {
     // no show() method
@@ -1384,7 +1503,9 @@ new B().show();`,
     question: '',
     code: `class Counter {
     static int c = 0;
-    Counter() { c++; }
+    Counter() {
+        c++;
+    }
 }
 Counter a = new Counter();
 Counter b = new Counter();
@@ -1396,7 +1517,9 @@ System.out.println(Counter.c);`,
   { id: 'q-mh-60', difficulty: 'medium_hard', category: 'Java-Polymorphism',
     question: '',
     code: `class A {
-    void show() { System.out.print("A"); }
+    void show() {
+        System.out.print("A");
+    }
 }
 class B extends A {
     void show() {
@@ -1421,16 +1544,22 @@ obj.show();`,
     code: `int a[] = {5, 2, 7, 4, 9, 6};
 int b[6], k = 0;
 
-for(int i=0;i<6;i++)
-    if(a[i] % 2 == 0) b[k++] = a[i];
+for(int i=0;
+i<6;
+i++)
+if(a[i] % 2 == 0) b[k++] = a[i];
 
-for(int i=0;i<6;i++)
-    if(a[i] % 2 != 0) b[k++] = a[i];`,
+for(int i=0;
+i<6;
+i++)
+if(a[i] % 2 != 0) b[k++] = a[i];`,
     options: ['2 4 6 5 7 9', '6 4 2 9 7 5', '2 4 6 7 5 9', '5 7 9 2 4 6'],
     correctIndex: 0 },
   { id: 'q-h-02', difficulty: 'hard', category: 'DSA-Arrays',
     question: 'For the array:\nWhat is the maximum possible sum of a contiguous subarray?',
-    code: `{-2, 3, -1, 5, -6, 4}`,
+    code: `{
+    -2, 3, -1, 5, -6, 4
+}`,
     options: ['6', '7', '8', '9'],
     correctIndex: 1 },
   { id: 'q-h-03', difficulty: 'hard', category: 'DSA-Arrays',
@@ -1498,7 +1627,9 @@ for(int i=0;i<6;i++)
     return a[n-1] > m ? a[n-1] : m;
 }
 
-For {4, 9, 2, 11, 7}, what is returned?`,
+For {
+    4, 9, 2, 11, 7
+}, what is returned?`,
     options: ['7', '9', '11', '33'],
     correctIndex: 2 },
   { id: 'q-h-17', difficulty: 'hard', category: 'DSA-Recursion',
@@ -1540,14 +1671,14 @@ printf("%.1f", a / b);`,
     question: 'What is x after the condition?',
     code: `int x = 0;
 if(x && ++x)
-    printf("A");`,
+printf("A");`,
     options: ['0', '1', 'Undefined', 'It depends on compiler'],
     correctIndex: 0 },
   { id: 'q-h-23', difficulty: 'hard', category: 'C-Basics',
     question: 'What is printed?',
     code: `int x = 5;
 if(x || ++x)
-    printf("%d", x);`,
+printf("%d", x);`,
     options: ['5', '6', '1', 'Undefined'],
     correctIndex: 0 },
   { id: 'q-h-24', difficulty: 'hard', category: 'C-Basics',
@@ -1615,7 +1746,10 @@ const int *p = &x;`,
     correctIndex: 1 },
   { id: 'q-h-32', difficulty: 'hard', category: 'C-Structures',
     question: '',
-    code: `struct S { int x; int y; };
+    code: `struct S {
+    int x;
+    int y;
+};
 struct S a[2] = {{1,2},{3,4}};
 struct S *p = a;
 
@@ -1624,7 +1758,9 @@ printf("%d", (p+1)->y);`,
     correctIndex: 3 },
   { id: 'q-h-33', difficulty: 'hard', category: 'C-Structures',
     question: 'What is a.x?',
-    code: `struct S { int x; };
+    code: `struct S {
+    int x;
+};
 struct S a = {5};
 struct S b = a;
 b.x = 9;`,
@@ -1639,14 +1775,18 @@ b.x = 9;`,
 struct Student s[4] = {{72},{91},{68},{85}};
 int idx = 0;
 
-for(int i=1;i<4;i++)
-    if(s[i].marks > s[idx].marks)
-        idx = i;`,
+for(int i=1;
+i<4;
+i++)
+if(s[i].marks > s[idx].marks)
+idx = i;`,
     options: ['0', '1', '2', '3'],
     correctIndex: 1 },
   { id: 'q-h-35', difficulty: 'hard', category: 'C-Structures',
     question: 'What is q.x?',
-    code: `struct P { int x; };
+    code: `struct P {
+    int x;
+};
 
 struct P make() {
     struct P p = {12};
@@ -1747,8 +1887,8 @@ print(len(x))`,
     code: `x = 10
 
 def f():
-    x = 20
-    return x
+x = 20
+return x
 
 print(f(), x)`,
     options: ['10 20', '20 20', '20 10', '10 10'],
@@ -1756,18 +1896,24 @@ print(f(), x)`,
   { id: 'q-h-48', difficulty: 'hard', category: 'Python-Loops',
     question: 'What is printed?',
     code: `for i in range(3):
-    if i == 5:
-        break
+if i == 5:
+break
 else:
-    print("DONE")`,
+print("DONE")`,
     options: ['Nothing', 'DONE', '5', 'Error'],
     correctIndex: 1 },
   { id: 'q-h-49', difficulty: 'hard', category: 'Java-Initialization',
     question: 'What is printed?',
     code: `class A {
-    static { System.out.print("S"); }
-    { System.out.print("I"); }
-    A() { System.out.print("C"); }
+    static {
+        System.out.print("S");
+    }
+    {
+        System.out.print("I");
+    }
+    A() {
+        System.out.print("C");
+    }
 }
 
 new A();
@@ -1776,16 +1922,24 @@ new A();`,
     correctIndex: 2 },
   { id: 'q-h-50', difficulty: 'hard', category: 'Java-Polymorphism',
     question: 'Which overload is selected?',
-    code: `void f(long x) { System.out.print("L"); }
-void f(double x) { System.out.print("D"); }
+    code: `void f(long x) {
+    System.out.print("L");
+}
+void f(double x) {
+    System.out.print("D");
+}
 
 f(5);`,
     options: ['L', 'D', 'Both', 'Compilation error'],
     correctIndex: 0 },
   { id: 'q-h-51', difficulty: 'hard', category: 'Java-Polymorphism',
     question: 'Which method is selected?',
-    code: `void f(String s) { System.out.print("S"); }
-void f(Object o) { System.out.print("O"); }
+    code: `void f(String s) {
+    System.out.print("S");
+}
+void f(Object o) {
+    System.out.print("O");
+}
 
 f(null);`,
     options: ['S', 'O', 'Both', 'Compilation error'],
@@ -1812,8 +1966,12 @@ System.out.println(s instanceof String);`,
   { id: 'q-h-55', difficulty: 'hard', category: 'Java-Constructors',
     question: 'What is printed?',
     code: `class A {
-    A() { this(5); }
-    A(int x) { System.out.print(x); }
+    A() {
+        this(5);
+    }
+    A(int x) {
+        System.out.print(x);
+    }
 }
 
 new A();`,
@@ -1832,7 +1990,9 @@ new A();`,
     void show();
 }
 class A implements I {
-    public void show() { System.out.print("A"); }
+    public void show() {
+        System.out.print("A");
+    }
 }
 
 I x = new A();
@@ -1842,10 +2002,12 @@ x.show();`,
   { id: 'q-h-58', difficulty: 'hard', category: 'Java-Inheritance',
     question: 'Which statement is correct?',
     code: `class A {
-    protected void show() {}
+    protected void show() {
+    }
 }
 class B extends A {
-    public void show() {}
+    public void show() {
+    }
 }`,
     options: ['Invalid because visibility cannot change', 'Valid because overriding can widen access', 'Invalid because public is narrower', 'Valid only if show is static'],
     correctIndex: 1 },
@@ -1854,7 +2016,7 @@ class B extends A {
     code: `try {
     int[] a = new int[2];
     System.out.println(a[3]);
-} catch (ArrayIndexOutOfBoundsException e) {
+}catch (ArrayIndexOutOfBoundsException e) {
     System.out.print("X");
 }`,
     options: ['X', '3', '0', 'Compilation error'],
@@ -1862,10 +2024,14 @@ class B extends A {
   { id: 'q-h-60', difficulty: 'hard', category: 'Java-Polymorphism',
     question: 'Is B.get() a valid override?',
     code: `class A {
-    Object get() { return new Object(); }
+    Object get() {
+        return new Object();
+    }
 }
 class B extends A {
-    String get() { return "OK"; }
+    String get() {
+        return "OK";
+    }
 }`,
     options: ['No, return types must always be identical', 'Yes, String is a subtype of Object', 'Only if get() is static', 'Only if Object is final'],
     correctIndex: 1 },
