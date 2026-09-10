@@ -3,7 +3,7 @@
 
 export type TeamId = 'A' | 'B'
 
-export type QuestionLevel = 'easy' | 'medium' | 'hard'
+export type QuestionLevel = 'easy' | 'medium' | 'medium_hard' | 'hard'
 
 export type ColorGroup =
   | 'brown'
@@ -89,7 +89,7 @@ export interface HeldCard {
 }
 
 // Question bank ----------------------------------------------------------
-export type QuestionCategory = 'DSA' | 'C' | 'General'
+export type QuestionCategory = string
 
 export interface Question {
   id: string
@@ -230,8 +230,10 @@ export interface Config {
   incomeTax: number
   superTax: number
   challengeQuestionLevel: QuestionLevel
-  // Per-question countdown timer, in seconds.
+  // Per-question countdown timer, in seconds (fallback if per-difficulty not set).
   questionTimeSeconds: number
+  // Per-difficulty question timers in seconds. Takes precedence over questionTimeSeconds.
+  questionTimeLimits: Record<QuestionLevel, number>
   // The active team that lands on an opponent's property answers a question.
   // Correct → this fraction of the calculated rent is paid.
   // Incorrect → the full calculated rent is paid.

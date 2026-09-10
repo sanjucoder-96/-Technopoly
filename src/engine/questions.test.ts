@@ -8,7 +8,7 @@ function g(): Game { return createGame({ teamAName: 'A', teamBName: 'B', startin
 
 describe('question engine', () => {
   it('question bank has entries at every documented difficulty', () => {
-    for (const level of ['easy', 'medium', 'hard'] as const) {
+    for (const level of ['easy', 'medium', 'medium_hard', 'hard'] as const) {
       const found = DEFAULT_QUESTIONS.filter(q => q.difficulty === level)
       expect(found.length).toBeGreaterThan(0)
     }
@@ -24,7 +24,7 @@ describe('question engine', () => {
 
   it('pickQuestion returns a question matching the requested difficulty', () => {
     const gm = g()
-    for (const level of ['easy', 'medium', 'hard'] as const) {
+    for (const level of ['easy', 'medium', 'medium_hard', 'hard'] as const) {
       const q = pickQuestion(gm, { difficulty: level })
       expect(q).not.toBeNull()
       expect(q!.difficulty).toBe(level)
@@ -33,9 +33,9 @@ describe('question engine', () => {
 
   it('pickQuestion respects category filter when possible', () => {
     const gm = g()
-    const q = pickQuestion(gm, { difficulty: 'medium', category: 'C' })
+    const q = pickQuestion(gm, { difficulty: 'medium', category: 'C-Basics' })
     expect(q).not.toBeNull()
-    expect(q!.category).toBe('C')
+    expect(q!.category).toBe('C-Basics')
   })
 
   it('pickQuestion avoids used questions until the pool is exhausted', () => {
@@ -81,7 +81,7 @@ describe('question engine', () => {
   it('pickQuestion falls back to any-category if category is empty', () => {
     const gm = g()
     // Force a filter that yields no matches for a category+difficulty combo
-    const q = pickQuestion(gm, { difficulty: 'easy', category: 'DSA' })
+    const q = pickQuestion(gm, { difficulty: 'easy', category: 'DSA-Arrays' })
     expect(q).not.toBeNull()
   })
 })

@@ -54,14 +54,14 @@ const LOCATIONS: RawLoc[] = [
   { name: 'Persistent',               colorGroup: 'orange',  price: 180, baseRent: 22, housePrice: 100, qLevel: 'medium' },
   { name: 'Mindtree',                 colorGroup: 'orange',  price: 180, baseRent: 22, housePrice: 100, qLevel: 'medium' },
   { name: 'L&T Technology Services',  colorGroup: 'orange',  price: 180, baseRent: 22, housePrice: 100, qLevel: 'medium' },
-  // red (3, price 240 → rent 29)
-  { name: 'Accenture',                colorGroup: 'red',     price: 240, baseRent: 29, housePrice: 150, qLevel: 'medium' },
-  { name: 'Cognizant',                colorGroup: 'red',     price: 240, baseRent: 29, housePrice: 150, qLevel: 'medium' },
-  { name: 'Infosys',                  colorGroup: 'red',     price: 240, baseRent: 29, housePrice: 150, qLevel: 'medium' },
-  // yellow (3, price 260 → rent 31)
-  { name: 'Wipro',                    colorGroup: 'yellow',  price: 260, baseRent: 31, housePrice: 150, qLevel: 'hard' },
-  { name: 'HCLTech',                  colorGroup: 'yellow',  price: 260, baseRent: 31, housePrice: 150, qLevel: 'hard' },
-  { name: 'Tech Mahindra',            colorGroup: 'yellow',  price: 260, baseRent: 31, housePrice: 150, qLevel: 'hard' },
+  // red (3, price 240 → rent 29) — TOP side = medium_hard
+  { name: 'Accenture',                colorGroup: 'red',     price: 240, baseRent: 29, housePrice: 150, qLevel: 'medium_hard' },
+  { name: 'Cognizant',                colorGroup: 'red',     price: 240, baseRent: 29, housePrice: 150, qLevel: 'medium_hard' },
+  { name: 'Infosys',                  colorGroup: 'red',     price: 240, baseRent: 29, housePrice: 150, qLevel: 'medium_hard' },
+  // yellow (3, price 260 → rent 31) — TOP side = medium_hard
+  { name: 'Wipro',                    colorGroup: 'yellow',  price: 260, baseRent: 31, housePrice: 150, qLevel: 'medium_hard' },
+  { name: 'HCLTech',                  colorGroup: 'yellow',  price: 260, baseRent: 31, housePrice: 150, qLevel: 'medium_hard' },
+  { name: 'Tech Mahindra',            colorGroup: 'yellow',  price: 260, baseRent: 31, housePrice: 150, qLevel: 'medium_hard' },
   // green (3, price 340 → rent 41)
   { name: 'Oracle',                   colorGroup: 'green',   price: 340, baseRent: 41, housePrice: 200, qLevel: 'hard' },
   { name: 'Salesforce',               colorGroup: 'green',   price: 340, baseRent: 41, housePrice: 200, qLevel: 'hard' },
@@ -72,17 +72,19 @@ const LOCATIONS: RawLoc[] = [
 ]
 
 // 4 data centers (replace the railways), all ₹200.
+// qLevel matches their board SIDE: bottom=easy, left=medium, top=medium_hard, right=hard.
 const RAILWAYS: Omit<RawLoc, 'housePrice'>[] = [
-  { name: 'GOOGLE DATA CENTER',    colorGroup: 'railway', price: 200, baseRent: 25, qLevel: 'medium' },
-  { name: 'MICROSOFT DATA CENTER', colorGroup: 'railway', price: 200, baseRent: 25, qLevel: 'medium' },
-  { name: 'NVIDIA DATA CENTER',    colorGroup: 'railway', price: 200, baseRent: 25, qLevel: 'medium' },
-  { name: 'AMAZON DATA CENTER',    colorGroup: 'railway', price: 200, baseRent: 25, qLevel: 'medium' }
+  { name: 'GOOGLE DATA CENTER',    colorGroup: 'railway', price: 200, baseRent: 25, qLevel: 'easy' },        // position 5 — bottom
+  { name: 'MICROSOFT DATA CENTER', colorGroup: 'railway', price: 200, baseRent: 25, qLevel: 'medium' },      // position 15 — left
+  { name: 'NVIDIA DATA CENTER',    colorGroup: 'railway', price: 200, baseRent: 25, qLevel: 'medium_hard' },  // position 25 — top
+  { name: 'AMAZON DATA CENTER',    colorGroup: 'railway', price: 200, baseRent: 25, qLevel: 'hard' }          // position 35 — right
 ]
 
 // 2 utilities, both ₹150 — renamed per master list.
+// qLevel matches board SIDE: left=medium, top=medium_hard.
 const UTILITIES: Omit<RawLoc, 'housePrice'>[] = [
-  { name: 'CPU CORE',  colorGroup: 'utility', price: 150, baseRent: 10, qLevel: 'easy' },
-  { name: 'DATA FLOW', colorGroup: 'utility', price: 150, baseRent: 10, qLevel: 'easy' }
+  { name: 'CPU CORE',  colorGroup: 'utility', price: 150, baseRent: 10, qLevel: 'medium' },       // position 12 — left
+  { name: 'DATA FLOW', colorGroup: 'utility', price: 150, baseRent: 10, qLevel: 'medium_hard' }    // position 28 — top
 ]
 
 // Board order (index → space), matching the PDF page 2 layout exactly:

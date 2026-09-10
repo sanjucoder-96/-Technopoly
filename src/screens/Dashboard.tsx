@@ -291,7 +291,6 @@ function DrawnCardBanner({ card: drawn, onDismiss }: { card: { card: Card; team:
   const game = useGame(s => s.game)!
   const teamName = game.teams[drawn.team].name
   const isChest = drawn.card.deck === 'chest'
-  const accent = isChest ? 'amber' : 'violet'
   return (
     <section className={`rounded-2xl border-2 p-6 animate-flyup
       ${isChest ? 'border-amber-400 bg-amber-50' : 'border-violet-400 bg-violet-50'}`}>
