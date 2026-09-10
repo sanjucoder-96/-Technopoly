@@ -94,6 +94,7 @@ export type QuestionCategory = string
 export interface Question {
   id: string
   question: string
+  code?: string
   options: string[]              // typically 4
   correctIndex: number           // 0-based index into options
   difficulty: QuestionLevel
