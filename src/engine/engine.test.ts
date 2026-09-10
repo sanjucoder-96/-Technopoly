@@ -30,7 +30,7 @@ describe('financials — cash vs property wealth (segregation)', () => {
   it('after purchasing a ₹200 property: cash=1300, property wealth=100, total=1400', () => {
     // Force the property price to 200 for this scenario.
     const g = newGame()
-    const propertyId = 'loc-10' // L&T Technology Services (₹200 per reference board)
+    const propertyId = 'rail-0' // GOOGLE DATA CENTER (₹200)
     expect(PROPERTIES_BY_ID[propertyId].price).toBe(200)
     purchase(g, 'A', propertyId, true)
     const w = wealthBreakdownForA(g)

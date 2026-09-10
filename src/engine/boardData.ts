@@ -9,10 +9,11 @@
 //      board LAYOUT (which position each color group / tax / chest lives at)
 //      and the price at each position.
 //
-// So each entry below is (Code Clash name, color from master list, price
-// from the reference board). Since the master list itself says prices are
-// preserved, the price at each board position is unchanged from the original
-// Monopoly India Edition reference — every rename is in-place.
+// So each entry below is (Code Clash name, color from master list, price).
+// Purchase price is now UNIFORM within each color group (custom Technopoly
+// pricing, overriding the original per-space reference-board prices):
+//   brown 100 · skyblue 120 · pink 160 · orange 180 ·
+//   red 240 · yellow 260 · green 340 · blue 360
 //
 // WHAT IS NOT IN EITHER DOCUMENT:
 //   • Per-property BASE RENT ("X" in the rules formula). Defaults below use
@@ -34,40 +35,40 @@ interface RawLoc {
   qLevel: QuestionLevel // NOT in document; editable default derived from price
 }
 
-// 22 locations, renamed per the Code Clash master list. Prices at each board
-// position preserved from the reference board (master list: "Purchase prices
-// preserved").
+// 22 locations, renamed per the Code Clash master list. Base rent is set to
+// 12% of purchase price for every street (rounded to the nearest rupee);
+// data centers / utilities keep their own reference-board rent.
 const LOCATIONS: RawLoc[] = [
-  // brown (2 locations, price 60)
-  { name: 'Zoho',                     colorGroup: 'brown',   price: 60,  baseRent: 2,  housePrice: 50,  qLevel: 'easy' },
-  { name: 'Freshworks',               colorGroup: 'brown',   price: 60,  baseRent: 4,  housePrice: 50,  qLevel: 'easy' },
-  // sky blue (3 locations, 100/100/120)
-  { name: 'Postman',                  colorGroup: 'skyblue', price: 100, baseRent: 6,  housePrice: 50,  qLevel: 'easy' },
-  { name: 'BrowserStack',             colorGroup: 'skyblue', price: 100, baseRent: 6,  housePrice: 50,  qLevel: 'easy' },
-  { name: 'Razorpay',                 colorGroup: 'skyblue', price: 120, baseRent: 8,  housePrice: 50,  qLevel: 'easy' },
-  // pink (3, 140/140/160)
-  { name: 'Hasura',                   colorGroup: 'pink',    price: 140, baseRent: 10, housePrice: 100, qLevel: 'medium' },
-  { name: 'Chargebee',                colorGroup: 'pink',    price: 140, baseRent: 10, housePrice: 100, qLevel: 'medium' },
-  { name: 'Mphasis',                  colorGroup: 'pink',    price: 160, baseRent: 12, housePrice: 100, qLevel: 'medium' },
-  // orange (3, 180/180/200)
-  { name: 'Persistent',               colorGroup: 'orange',  price: 180, baseRent: 14, housePrice: 100, qLevel: 'medium' },
-  { name: 'Mindtree',                 colorGroup: 'orange',  price: 180, baseRent: 14, housePrice: 100, qLevel: 'medium' },
-  { name: 'L&T Technology Services',  colorGroup: 'orange',  price: 200, baseRent: 16, housePrice: 100, qLevel: 'medium' },
-  // red (3, 220/220/240)
-  { name: 'Accenture',                colorGroup: 'red',     price: 220, baseRent: 18, housePrice: 150, qLevel: 'medium' },
-  { name: 'Cognizant',                colorGroup: 'red',     price: 220, baseRent: 18, housePrice: 150, qLevel: 'medium' },
-  { name: 'Infosys',                  colorGroup: 'red',     price: 240, baseRent: 20, housePrice: 150, qLevel: 'medium' },
-  // yellow (3, 260/260/280)
-  { name: 'Wipro',                    colorGroup: 'yellow',  price: 260, baseRent: 22, housePrice: 150, qLevel: 'hard' },
-  { name: 'HCLTech',                  colorGroup: 'yellow',  price: 260, baseRent: 22, housePrice: 150, qLevel: 'hard' },
-  { name: 'Tech Mahindra',            colorGroup: 'yellow',  price: 280, baseRent: 24, housePrice: 150, qLevel: 'hard' },
-  // green (3, 300/300/320)
-  { name: 'Oracle',                   colorGroup: 'green',   price: 300, baseRent: 26, housePrice: 200, qLevel: 'hard' },
-  { name: 'Salesforce',               colorGroup: 'green',   price: 300, baseRent: 26, housePrice: 200, qLevel: 'hard' },
-  { name: 'IBM',                      colorGroup: 'green',   price: 320, baseRent: 28, housePrice: 200, qLevel: 'hard' },
-  // dark blue (2, 350/400)
-  { name: 'Microsoft',                colorGroup: 'blue',    price: 350, baseRent: 35, housePrice: 200, qLevel: 'hard' },
-  { name: 'TCS',                      colorGroup: 'blue',    price: 400, baseRent: 50, housePrice: 200, qLevel: 'hard' }
+  // brown (2 locations, price 100 → rent 12)
+  { name: 'Zoho',                     colorGroup: 'brown',   price: 100, baseRent: 12, housePrice: 50,  qLevel: 'easy' },
+  { name: 'Freshworks',               colorGroup: 'brown',   price: 100, baseRent: 12, housePrice: 50,  qLevel: 'easy' },
+  // sky blue (3 locations, price 120 → rent 14)
+  { name: 'Postman',                  colorGroup: 'skyblue', price: 120, baseRent: 14, housePrice: 50,  qLevel: 'easy' },
+  { name: 'BrowserStack',             colorGroup: 'skyblue', price: 120, baseRent: 14, housePrice: 50,  qLevel: 'easy' },
+  { name: 'Razorpay',                 colorGroup: 'skyblue', price: 120, baseRent: 14, housePrice: 50,  qLevel: 'easy' },
+  // pink (3, price 160 → rent 19)
+  { name: 'Hasura',                   colorGroup: 'pink',    price: 160, baseRent: 19, housePrice: 100, qLevel: 'medium' },
+  { name: 'Chargebee',                colorGroup: 'pink',    price: 160, baseRent: 19, housePrice: 100, qLevel: 'medium' },
+  { name: 'Mphasis',                  colorGroup: 'pink',    price: 160, baseRent: 19, housePrice: 100, qLevel: 'medium' },
+  // orange (3, price 180 → rent 22)
+  { name: 'Persistent',               colorGroup: 'orange',  price: 180, baseRent: 22, housePrice: 100, qLevel: 'medium' },
+  { name: 'Mindtree',                 colorGroup: 'orange',  price: 180, baseRent: 22, housePrice: 100, qLevel: 'medium' },
+  { name: 'L&T Technology Services',  colorGroup: 'orange',  price: 180, baseRent: 22, housePrice: 100, qLevel: 'medium' },
+  // red (3, price 240 → rent 29)
+  { name: 'Accenture',                colorGroup: 'red',     price: 240, baseRent: 29, housePrice: 150, qLevel: 'medium' },
+  { name: 'Cognizant',                colorGroup: 'red',     price: 240, baseRent: 29, housePrice: 150, qLevel: 'medium' },
+  { name: 'Infosys',                  colorGroup: 'red',     price: 240, baseRent: 29, housePrice: 150, qLevel: 'medium' },
+  // yellow (3, price 260 → rent 31)
+  { name: 'Wipro',                    colorGroup: 'yellow',  price: 260, baseRent: 31, housePrice: 150, qLevel: 'hard' },
+  { name: 'HCLTech',                  colorGroup: 'yellow',  price: 260, baseRent: 31, housePrice: 150, qLevel: 'hard' },
+  { name: 'Tech Mahindra',            colorGroup: 'yellow',  price: 260, baseRent: 31, housePrice: 150, qLevel: 'hard' },
+  // green (3, price 340 → rent 41)
+  { name: 'Oracle',                   colorGroup: 'green',   price: 340, baseRent: 41, housePrice: 200, qLevel: 'hard' },
+  { name: 'Salesforce',               colorGroup: 'green',   price: 340, baseRent: 41, housePrice: 200, qLevel: 'hard' },
+  { name: 'IBM',                      colorGroup: 'green',   price: 340, baseRent: 41, housePrice: 200, qLevel: 'hard' },
+  // dark blue (2, price 360 → rent 43)
+  { name: 'Microsoft',                colorGroup: 'blue',    price: 360, baseRent: 43, housePrice: 200, qLevel: 'hard' },
+  { name: 'TCS',                      colorGroup: 'blue',    price: 360, baseRent: 43, housePrice: 200, qLevel: 'hard' }
 ]
 
 // 4 data centers (replace the railways), all ₹200.
