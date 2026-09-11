@@ -250,25 +250,25 @@ print(x[:3])`,
   { id: 'q-e-35', difficulty: 'easy', category: 'Python-Loops',
     question: 'What is printed?',
     code: `for i in range(2, 7, 2):
-print(i, end=" ")`,
+    print(i, end=" ")`,
     options: ['2 4 6', '2 4 6 8', '1 3 5 7', '2 3 4 5 6'],
     correctIndex: 0 },
   { id: 'q-e-36', difficulty: 'easy', category: 'Python-Loops',
     question: 'What is printed?',
     code: `for i in range(3):
-print(i)
+    print(i)
 else:
-print("Done")`,
+    print("Done")`,
     options: ['0 1 2', '0 1 2 Done', 'Done 0 1 2', 'Error'],
     correctIndex: 1 },
   { id: 'q-e-37', difficulty: 'easy', category: 'Python-Loops',
     question: 'What is printed?',
     code: `for i in range(5):
-if i == 2:
-break
-print(i)
+    if i == 2:
+        break
+    print(i)
 else:
-print("Done")`,
+    print("Done")`,
     options: ['0 1 Done', '0 1', '0 1 2 Done', 'Done'],
     correctIndex: 1 },
   { id: 'q-e-38', difficulty: 'easy', category: 'Python-Lists',
@@ -281,8 +281,8 @@ print(x)`,
   { id: 'q-e-39', difficulty: 'easy', category: 'Python-Functions',
     question: 'What is printed?',
     code: `def add(x, items=[]):
-items.append(x)
-return items
+    items.append(x)
+    return items
 
 print(add(1))
 print(add(2))`,
@@ -303,9 +303,9 @@ print(d["a"])`,
     question: 'What is printed?',
     code: `x = []
 if x:
-print("A")
+    print("A")
 else:
-print("B")`,
+    print("B")`,
     options: ['A', 'B', '[]', 'Error'],
     correctIndex: 1 },
   { id: 'q-e-43', difficulty: 'easy', category: 'Python-Basics',
@@ -769,10 +769,10 @@ print(x[::-1])`,
   { id: 'q-m-42', difficulty: 'medium', category: 'Python-Loops',
     question: 'What is printed?',
     code: `for i in range(3):
-if i == 1:
-break
+    if i == 1:
+        break
 else:
-print("Done")`,
+    print("Done")`,
     options: ['Done', '0', 'Nothing', '0 Done'],
     correctIndex: 2 },
   { id: 'q-m-43', difficulty: 'medium', category: 'Python-Lists',
@@ -786,9 +786,9 @@ print(a[0][0])`,
   { id: 'q-m-44', difficulty: 'medium', category: 'Python-Functions',
     question: '',
     code: `def fun(x):
-if x > 5:
-return x * 2
-return x + 2
+    if x > 5:
+        return x * 2
+    return x + 2
 print(fun(5))`,
     options: ['5', '7', '10', '12'],
     correctIndex: 1 },
@@ -802,9 +802,9 @@ print(len(x))`,
     question: '',
     code: `x = [0]
 if x:
-print("True")
+    print("True")
 else:
-print("False")`,
+    print("False")`,
     options: ['True', 'False', '0', 'Error'],
     correctIndex: 0 },
   { id: 'q-m-47', difficulty: 'medium', category: 'Python-Dictionaries',
@@ -818,8 +818,8 @@ print(d["c"])`,
     question: '',
     code: `count = 0
 for i in range(2):
-for j in range(3):
-count += 1
+    for j in range(3):
+        count += 1
 print(count)`,
     options: ['3', '5', '6', '9'],
     correctIndex: 2 },
@@ -1312,8 +1312,8 @@ printf("%d", CUBE(x++));`,
   { id: 'q-mh-41', difficulty: 'medium_hard', category: 'Python-Functions',
     question: 'What is printed?',
     code: `def add(x, a=[]):
-a.append(x)
-return a
+    a.append(x)
+    return a
 
 print(add(1))
 print(add(2))`,
@@ -1338,9 +1338,9 @@ print(d["c"])`,
     question: '',
     code: `x = 0
 for i in range(1,5):
-if i == 3:
-continue
-x += i
+    if i == 3:
+        continue
+    x += i
 
 print(x)`,
     options: ['7', '8', '9', '10'],
@@ -1887,8 +1887,8 @@ print(len(x))`,
     code: `x = 10
 
 def f():
-x = 20
-return x
+    x = 20
+    return x
 
 print(f(), x)`,
     options: ['10 20', '20 20', '20 10', '10 10'],
@@ -1896,10 +1896,10 @@ print(f(), x)`,
   { id: 'q-h-48', difficulty: 'hard', category: 'Python-Loops',
     question: 'What is printed?',
     code: `for i in range(3):
-if i == 5:
-break
+    if i == 5:
+        break
 else:
-print("DONE")`,
+    print("DONE")`,
     options: ['Nothing', 'DONE', '5', 'Error'],
     correctIndex: 1 },
   { id: 'q-h-49', difficulty: 'hard', category: 'Java-Initialization',
